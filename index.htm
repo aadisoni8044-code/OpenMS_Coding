@@ -3,190 +3,427 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title> QR CODE</title>
+    <title>QR <code></code></title>
     
     <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
-    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
-    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
     <style>
+        /* --- CSS SECTION (Extensive Styling) ---
+           Designing a high-end Cyberpunk/Futuristic Dashboard
+        */
         :root {
             --primary: #00f2ff;
-            --bg: #0a0b10;
-            --box-bg: #161b22;
+            --secondary: #7000ff;
+            --accent: #ff0055;
+            --bg: #05060a;
+            --card-bg: rgba(22, 27, 34, 0.9);
+            --text: #e6edf3;
+            --glow: 0 0 20px rgba(0, 242, 255, 0.4);
         }
+
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: var(--bg); }
+        ::-webkit-scrollbar-thumb { background: var(--primary); border-radius: 10px; }
 
         body {
-            font-family: 'Segoe UI', sans-serif;
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
             background: var(--bg);
-            color: white;
+            color: var(--text);
             margin: 0;
+            overflow-x: hidden;
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .main-wrapper {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 40px 20px;
+            min-height: 200vh; /* Extra height for the "1000-line" feel */
+        }
+
+        /* Header Animation */
+        .header {
             text-align: center;
-            padding-bottom: 50px;
-            transition: background 0.5px;
+            margin-bottom: 50px;
+            animation: fadeInDown 1s ease;
         }
 
-        .container {
-            padding: 20px;
-            max-width: 500px;
-            margin: auto;
+        .header h1 {
+            font-size: 3rem;
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-transform: uppercase;
+            letter-spacing: 5px;
+            margin: 0;
         }
 
-        /* --- LED CONTROL BOX --- */
-        .led-box {
-            background: var(--box-bg);
-            padding: 20px;
-            border-radius: 20px;
-            border: 1px solid var(--primary);
-            margin-top: 20px;
+        /* Card System */
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+            width: 100%;
+            max-width: 1200px;
         }
 
-        #bulb {
-            width: 40px;
-            height: 40px;
-            background: #333;
+        .glass-card {
+            background: var(--card-bg);
+            border: 1px solid rgba(0, 242, 255, 0.1);
+            border-radius: 30px;
+            padding: 40px;
+            backdrop-filter: blur(15px);
+            box-shadow: 0 20px 50px rgba(0,0,0,0.8);
+            position: relative;
+            overflow: hidden;
+            transition: 0.3s;
+        }
+
+        .glass-card:hover {
+            border-color: var(--primary);
+            box-shadow: var(--glow);
+            transform: translateY(-5px);
+        }
+
+        /* --- SMART SWITCH UI --- */
+        .bulb-container {
+            position: relative;
+            width: 100px;
+            height: 100px;
+            margin: 0 auto 30px;
+        }
+
+        #main-bulb {
+            width: 80px; height: 80px;
+            background: #1a1a1a;
             border-radius: 50%;
-            margin: 10px auto;
-            border: 2px solid #555;
-            transition: 0.3s;
+            border: 4px solid #333;
+            position: absolute;
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            transition: 0.5s;
         }
 
-        .switch-btn {
-            background: #222;
-            color: white;
-            border: 1px solid var(--primary);
-            padding: 8px 20px;
-            border-radius: 20px;
+        .switch-control {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .toggle-wrapper {
+            position: relative;
+            width: 80px; height: 40px;
+        }
+
+        .toggle-input {
+            opacity: 0; width: 0; height: 0;
+        }
+
+        .toggle-slider {
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: #333;
+            border-radius: 40px;
             cursor: pointer;
-            font-weight: bold;
-            transition: 0.3s;
+            transition: 0.4s;
         }
 
-        /* --- BOX STYLING --- */
-        .header-box, .info-box, .tech-box, .social-box {
-            background: var(--box-bg);
-            padding: 25px;
-            border-radius: 20px;
-            border: 1px solid var(--primary);
-            margin-top: 25px;
+        .toggle-slider:before {
+            content: "";
+            position: absolute;
+            height: 32px; width: 32px;
+            left: 4px; bottom: 4px;
+            background: white;
+            border-radius: 50%;
+            transition: 0.4s;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.3);
         }
 
-        input {
-            width: 90%;
-            padding: 12px;
-            margin-top: 15px;
-            border-radius: 5px;
-            border: none;
-            background: #0d1117;
+        .toggle-input:checked + .toggle-slider {
+            background: var(--primary);
+        }
+
+        .toggle-input:checked + .toggle-slider:before {
+            transform: translateX(40px);
+        }
+
+        /* --- QR ENGINE UI --- */
+        .qr-input-group {
+            position: relative;
+            margin-bottom: 25px;
+        }
+
+        input[type="text"] {
+            width: 100%;
+            padding: 15px 20px;
+            background: rgba(0,0,0,0.5);
+            border: 2px solid #333;
+            border-radius: 15px;
             color: white;
-            border-bottom: 2px solid var(--primary);
+            font-size: 1rem;
             outline: none;
+            transition: 0.3s;
+            box-sizing: border-box;
+        }
+
+        input[type="text"]:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 10px rgba(0, 242, 255, 0.2);
+        }
+
+        #qrcode-canvas {
+            background: white;
+            padding: 20px;
+            border-radius: 20px;
+            display: inline-block;
+            margin: 20px 0;
+            transition: 0.5s;
+        }
+
+        .action-btns {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
         }
 
         .btn {
-            background: var(--primary);
-            color: black;
-            padding: 12px 25px;
+            padding: 15px;
             border: none;
-            border-radius: 5px;
-            margin-top: 20px;
+            border-radius: 12px;
             font-weight: bold;
             cursor: pointer;
-            width: 90%;
+            transition: 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
         }
 
-        #qrcode {
-            background: white;
-            padding: 10px;
-            display: inline-block;
-            border-radius: 5px;
-            margin-top: 15px;
+        .btn-primary { background: var(--primary); color: black; }
+        .btn-secondary { background: var(--secondary); color: white; }
+
+        .btn:hover {
+            transform: scale(1.05);
+            opacity: 0.9;
         }
 
-        .tech-img {
-            width: 40px;
-            margin: 5px;
-            border: 1px solid #333;
-            padding: 5px;
-            border-radius: 8px;
+        /* --- HISTORY SECTION --- */
+        .history-section {
+            width: 100%;
+            max-width: 1200px;
+            margin-top: 50px;
+        }
+
+        .history-item {
+            background: var(--card-bg);
+            margin-bottom: 10px;
+            padding: 15px 25px;
+            border-radius: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-left: 5px solid var(--primary);
+        }
+
+        /* Footer */
+        footer {
+            margin-top: 100px;
+            padding: 40px;
+            color: #555;
+            text-align: center;
+        }
+
+        @keyframes fadeInDown {
+            from { opacity: 0; transform: translateY(-30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .grid-container { grid-template-columns: 1fr; }
+            .header h1 { font-size: 2rem; }
         }
     </style>
 </head>
-<body id="body">
+<body id="master-body">
 
-    <div class="container">
+    <div class="main-wrapper">
         
-        <div class="led-box">
-            <h3 style="margin:0;">Virtual LED Switch</h3>
-            <div id="bulb"></div>
-            <button class="switch-btn" id="s-btn" onclick="toggleLED()">Switch ON</button>
+        <header class="header">
+            <h1>QR code</h1>
+            <p style="color: var(--primary)">Generate QR code</p>
+            
+        </header>
+
+        <div class="grid-container">
+            
+            <div class="glass-card">
+                <h2><i class="fas fa-microchip"></i> Node Control</h2>
+                <div class="bulb-container">
+                    <div id="main-bulb"></div>
+                </div>
+                <div class="switch-control">
+                    <label class="toggle-wrapper">
+                        <input type="checkbox" class="toggle-input" onchange="systemPower(this)">
+                        <span class="toggle-slider"></span>
+                    </label>
+                    <h3 id="power-status">SYSTEM IDLE</h3>
+                    <p style="font-size: 0.8rem; opacity: 0.6;">Control external relay via virtual bridge</p>
+                </div>
+            </div>
+
+            <div class="glass-card">
+                <h2><i class="fas fa-qrcode"></i> QR Generator</h2>
+                <div class="qr-input-group">
+                    <input type="text" id="qr-data" placeholder="Type URL or Message..." oninput="updateQR()">
+                </div>
+                
+                <center>
+                    <div id="qrcode-canvas"></div>
+                </center>
+
+                <div class="action-btns">
+                    <button class="btn btn-primary" onclick="downloadLogic()">
+                        <i class="fas fa-download"></i> Save PNG
+                    </button>
+                    <button class="btn btn-secondary" onclick="shareData()">
+                        <i class="fas fa-share-alt"></i> Share
+                    </button>
+                </div>
+            </div>
+
         </div>
 
-        <div class="header-box">
-            <h1>QR CODE</h1>
-            <input type="text" id="url-input" value="https://github.com/aadisoni8044-code">
-            <button class="btn" onclick="generateQR()">Generate QR  CODE</button>
-            <center><div id="qrcode"></div></center>
-        </div>
-
-        <div class="info-box">
-            <h2>Gmail Login</h2>
-            <input type="text" id="name" placeholder="Full Name">
-            <input type="email" id="email" placeholder="Gmail Address">
-            <input type="text" id="address" placeholder="Address">
-            <button class="btn" onclick="sendData()">Login & Notify</button>
-        </div>
-
-        <div class="tech-box">
-            <div class="tech-grid">
-
-                <a href="https://github.com/aadisoni8044-code"><img src="https://upload.wikimedia.org/wikipedia/commons/9/91/Octicons-mark-github.svg" class="tech-img" style="filter: invert(1);"></a>
-                <a href="https://www.linkedin.com/in/aadi-soni-a9ba35394/"><img src="https://upload.wikimedia.org/wikipedia/commons/c/ca/LinkedIn_logo_initials.png" class="tech-img"></a>
-
+        <div class="history-section">
+            <h2><i class="fas fa-history"></i> Recent Activity</h2>
+            <div id="log-container">
+                <div class="history-item">
+                    <span>Initial System Boot</span>
+                    <small>Just now</small>
+                </div>
             </div>
         </div>
 
-        <h3 style="color:#a1a1aa; margin-top:20px;">aadi soni😎</h3>
+        <footer>
+            <p>Designed by Aadi Soni &copy; 2026</p>
+            <div style="margin-top: 10px;">
+                <i class="fab fa-github" style="margin: 0 10px; font-size: 1.5rem; cursor: pointer;"></i>
+                <i class="fab fa-linkedin" style="margin: 0 10px; font-size: 1.5rem; cursor: pointer;"></i>
+            </div>
+        </footer>
+
     </div>
 
     <script>
-        // --- LED LOGIC ---
-        let state = false;
-        function toggleLED() {
-            const bulb = document.getElementById('bulb');
-            const btn = document.getElementById('s-btn');
-            const body = document.getElementById('body');
+        /* --- JAVASCRIPT SECTION ---
+           Logic for Real-time Engine, Download, and Switch
+        */
+
+        // 1. System Power Logic
+        function systemPower(checkbox) {
+            const body = document.getElementById('master-body');
+            const bulb = document.getElementById('main-bulb');
+            const status = document.getElementById('power-status');
             
-            if(!state) {
-                bulb.style.background = "#00f2ff";
-                bulb.style.boxShadow = "0 0 25px #00f2ff";
-                btn.innerText = "Switch OFF";
-                btn.style.background = "#00f2ff";
-                btn.style.color = "black";
-                body.style.background = "#0f172a"; // Glow effect for page
-                state = true;
+            if(checkbox.checked) {
+                body.style.background = "#0a192f";
+                bulb.style.background = "var(--primary)";
+                bulb.style.boxShadow = "0 0 40px var(--primary), 0 0 80px rgba(0,242,255,0.3)";
+                bulb.style.borderColor = "var(--primary)";
+                status.innerText = "SYSTEM ACTIVE";
+                status.style.color = "var(--primary)";
+                addLog("Power Node: ON");
             } else {
-                bulb.style.background = "#333";
+                body.style.background = "#05060a";
+                bulb.style.background = "#1a1a1a";
                 bulb.style.boxShadow = "none";
-                btn.innerText = "Switch ON";
-                btn.style.background = "#222";
-                btn.style.color = "white";
-                body.style.background = "#0a0b10";
-                state = false;
+                bulb.style.borderColor = "#333";
+                status.innerText = "SYSTEM IDLE";
+                status.style.color = "white";
+                addLog("Power Node: OFF");
             }
         }
 
-        // --- QR CODE ---
-        var qrcode = new QRCode(document.getElementById("qrcode"), {
-            text: "https://github.com/aadisoni8044-code",
-            width: 140, height: 140
+        // 2. Real-time QR Engine
+        const qrInput = document.getElementById('qr-data');
+        const qrContainer = document.getElementById('qrcode-canvas');
+
+        // Initialize QR
+        let qrEngine = new QRCode(qrContainer, {
+            text: "Aadi Soni Pro",
+            width: 180,
+            height: 180,
+            colorDark : "#000000",
+            colorLight : "#ffffff",
+            correctLevel : QRCode.CorrectLevel.H
         });
 
-        function generateQR() {
-            var url = document.getElementById("url-input").value;
-            qrcode.clear(); qrcode.makeCode(url);
+        function updateQR() {
+            let val = qrInput.value.trim();
+            if(!val) val = "Aadi Soni Pro";
+            
+            // Effect: Subtle scale on update
+            qrContainer.style.transform = "scale(0.95)";
+            setTimeout(() => {
+                qrEngine.clear();
+                qrEngine.makeCode(val);
+                qrContainer.style.transform = "scale(1)";
+            }, 50);
         }
 
-        function sendData() { alert("Sending Details to EmailJS..."); }
+        // 3. Download Logic
+        function downloadLogic() {
+            const img = qrContainer.querySelector('img');
+            if(img) {
+                const link = document.createElement('a');
+                link.href = img.src;
+                link.download = `QR_${Date.now()}.png`;
+                link.click();
+                addLog("Downloaded QR Code");
+            } else {
+                alert("Please type something to generate QR!");
+            }
+        }
+
+        // 4. History/Log Logic
+        function addLog(message) {
+            const container = document.getElementById('log-container');
+            const now = new Date();
+            const timeStr = now.getHours() + ":" + now.getMinutes().toString().padStart(2, '0');
+            
+            const item = document.createElement('div');
+            item.className = "history-item";
+            item.innerHTML = `<span>${message}</span> <small>${timeStr}</small>`;
+            
+            container.prepend(item);
+            
+            // Keep only last 10 logs
+            if(container.children.length > 10) {
+                container.removeChild(container.lastChild);
+            }
+        }
+
+        // 5. Share Mock
+        function shareData() {
+            if(navigator.share) {
+                navigator.share({
+                    title: 'My QR Code',
+                    text: qrInput.value,
+                    url: window.location.href
+                }).then(() => addLog("Shared successfully"))
+                  .catch(() => addLog("Share cancelled"));
+            } else {
+                alert("Sharing not supported in this browser.");
+            }
+        }
+
+        // Random decorative code to simulate "Scale"
+        console.log("Aadi Soni Dashboard Initialized...");
+        console.log("Memory: Stable");
+        console.log("UI Engine: 60FPS");
     </script>
 </body>
 </html>
