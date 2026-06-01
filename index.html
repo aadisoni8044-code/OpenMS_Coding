@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>OpenMS 1.1 — The Ultimate Developer Ecosystem</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=JetBrains+Mono:ital,wght@0,300;0,400;0,500;1,400&family=DM+Sans:wght@300;400;500&display=swap"
+    rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+
+  <!-- ─── NAV ─────────────────────────────────────────────────── -->
+  <nav class="nav" id="nav">
+    <div class="nav-inner">
+      <a href="#" class="nav-logo">
+        <span class="logo-bracket">[</span>OpenMS<span class="logo-version">1.1</span><span
+          class="logo-bracket">]</span>
+      </a>
+      <ul class="nav-links">
+        <li><a href="#features">Features</a></li>
+        <li><a href="#showcase">Showcase</a></li>
+        <li><a href="#download">Download</a></li>
+      </ul>
+      <a href="https://github.com/aadisoni8044-code/OpenMS" target="_blank" class="btn btn-nav">
+        Get Engine
+      </a>
+      <button class="nav-hamburger" id="hamburger" aria-label="Open menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+    <!-- mobile menu -->
+    <div class="mobile-menu" id="mobileMenu">
+      <a href="#features">Features</a>
+      <a href="#showcase">Showcase</a>
+      <a href="#download">Download</a>
+      <a href="https://github.com/aadisoni8044-code/OpenMS" target="_blank" class="btn btn-primary"
+        style="margin-top:1rem">Get Engine</a>
+    </div>
+  </nav>
+
+  <!-- ─── HERO ─────────────────────────────────────────────────── -->
+  <section class="hero" id="home">
+    <!-- animated grid -->
+    <div class="grid-bg" aria-hidden="true"></div>
+    <!-- scanline overlay -->
+    <div class="scanlines" aria-hidden="true"></div>
+    <!-- floating orbs -->
+    <div class="orb orb-1" aria-hidden="true"></div>
+    <div class="orb orb-2" aria-hidden="true"></div>
+
+    <div class="hero-inner">
+      <div class="hero-badge">
+        <span class="badge-dot"></span>
+        Version 1.1 — Now Available
+      </div>
+
+      <h1 class="hero-title">
+        OpenMS 1.1<br />
+        <span class="title-accent">The Ultimate Developer</span>
+        <span class="title-outline">Ecosystem</span>
+      </h1>
+
+      <p class="hero-sub">
+        A lightweight, high-performance language designed to eliminate clutter.<br />
+        No semicolons, no strict colons — just pure, blazing-fast code.
+      </p>
+
+      <div class="hero-cta">
+        <a href="https://github.com/aadisoni8044-code/OpenMS" target="_blank" class="btn btn-primary btn-glow">
+          <svg class="btn-icon" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+            <path d="M10 2v10M6 8l4 4 4-4M3 14v2a1 1 0 001 1h12a1 1 0 001-1v-2" stroke="currentColor" stroke-width="1.6"
+              stroke-linecap="round" stroke-linejoin="round" />
+          </svg>
+          Download OpenMS Engine
+        </a>
+        <a href="#showcase" class="btn btn-ghost">
+          View Documentation
+          <svg class="btn-icon-right" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+            <path d="M4 10h12M11 5l5 5-5 5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"
+              stroke-linejoin="round" />
+          </svg>
+        </a>
+      </div>
+
+      <!-- terminal preview snippet in hero -->
+      <div class="hero-terminal" aria-label="OpenMS code sample">
+        <div class="terminal-topbar">
+          <span class="dot dot-red"></span>
+          <span class="dot dot-yellow"></span>
+          <span class="dot dot-green"></span>
+          <span class="terminal-title">openms_shell.ms</span>
+        </div>
+        <pre class="terminal-code"><code id="heroCode"></code></pre>
+      </div>
+
+      <!-- stats row -->
+      <div class="stats-row">
+        <div class="stat">
+          <span class="stat-num">0</span>
+          <span class="stat-label">Semicolons Required</span>
+        </div>
+        <div class="stat-divider"></div>
+        <div class="stat">
+          <span class="stat-num">1.1</span>
+          <span class="stat-label">Current Stable Version</span>
+        </div>
+        <div class="stat-divider"></div>
+        <div class="stat">
+          <span class="stat-num">∞</span>
+          <span class="stat-label">Extensible Functions</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── FEATURES ─────────────────────────────────────────────── -->
+  <section class="features" id="features">
+    <div class="section-inner">
+      <div class="section-label">Core Capabilities</div>
+      <h2 class="section-title">Everything a modern language<br />should ship with.</h2>
+      <p class="section-sub">OpenMS strips the ceremony from code, keeping the power.</p>
+
+      <div class="features-grid">
+
+        <!-- Feature 1 -->
+        <div class="feat-card" data-index="0">
+          <div class="feat-icon-wrap">
+            <svg viewBox="0 0 40 40" fill="none" aria-hidden="true">
+              <rect width="40" height="40" rx="10" fill="transparent" />
+              <path d="M10 14h20M10 20h14M10 26h17" stroke="#00f2fe" stroke-width="2" stroke-linecap="round" />
+              <circle cx="31" cy="26" r="4" stroke="#00f2fe" stroke-width="1.5" />
+              <path d="M29 26l1.5 1.5L33 24" stroke="#00f2fe" stroke-width="1.5" stroke-linecap="round"
+                stroke-linejoin="round" />
+            </svg>
+          </div>
+          <h3 class="feat-title">Zero Clutter</h3>
+          <p class="feat-desc">No semicolons, no forced colons. Write in clean, readable blocks that look like
+            pseudocode — only it actually runs.</p>
+          <div class="feat-tag">Syntax Design</div>
+        </div>
+
+        <!-- Feature 2 -->
+        <div class="feat-card" data-index="1">
+          <div class="feat-icon-wrap">
+            <svg viewBox="0 0 40 40" fill="none" aria-hidden="true">
+              <rect width="40" height="40" rx="10" fill="transparent" />
+              <path d="M8 20a12 12 0 1124 0 12 12 0 01-24 0z" stroke="#00f2fe" stroke-width="1.5" />
+              <path d="M20 14v6l4 2" stroke="#00f2fe" stroke-width="1.8" stroke-linecap="round"
+                stroke-linejoin="round" />
+              <path d="M13 31l2-3" stroke="#00f2fe" stroke-width="1.5" stroke-linecap="round" />
+              <path d="M27 31l-2-3" stroke="#00f2fe" stroke-width="1.5" stroke-linecap="round" />
+            </svg>
+          </div>
+          <h3 class="feat-title">Smart Error Spotter</h3>
+          <p class="feat-desc">Advanced English spell-check engine catches <code>machin()</code> and instantly suggests
+            <code>machine()</code> with exact line numbers.
+          </p>
+          <div class="feat-tag">Diagnostics</div>
+        </div>
+
+        <!-- Feature 3 -->
+        <div class="feat-card" data-index="2">
+          <div class="feat-icon-wrap">
+            <svg viewBox="0 0 40 40" fill="none" aria-hidden="true">
+              <rect width="40" height="40" rx="10" fill="transparent" />
+              <rect x="8" y="12" width="24" height="18" rx="3" stroke="#00f2fe" stroke-width="1.5" />
+              <path d="M14 22l3 3 6-7" stroke="#00f2fe" stroke-width="1.8" stroke-linecap="round"
+                stroke-linejoin="round" />
+              <path d="M20 8v4" stroke="#00f2fe" stroke-width="1.5" stroke-linecap="round" />
+            </svg>
+          </div>
+          <h3 class="feat-title">Built for Apps &amp; Games</h3>
+          <p class="feat-desc">In-built high-performance functions for retro games, loop controls, and fast execution.
+            <code>random_number</code>, <code>delay</code>, <code>clear_terminal</code> — all native.
+          </p>
+          <div class="feat-tag">Runtime</div>
+        </div>
+
+        <!-- Feature 4 -->
+        <div class="feat-card" data-index="3">
+          <div class="feat-icon-wrap">
+            <svg viewBox="0 0 40 40" fill="none" aria-hidden="true">
+              <rect width="40" height="40" rx="10" fill="transparent" />
+              <path d="M20 8l2 5h5l-4 3 1.5 5L20 18l-4.5 3 1.5-5-4-3h5z" stroke="#00f2fe" stroke-width="1.4"
+                stroke-linejoin="round" />
+              <path d="M12 28h16M14 32h12" stroke="#00f2fe" stroke-width="1.5" stroke-linecap="round" />
+            </svg>
+          </div>
+          <h3 class="feat-title">Lightweight Base Engine</h3>
+          <p class="feat-desc">Tiny footprint, portable, and lightning-fast compilation built on Python core
+            optimization. Ship anywhere, instantly.</p>
+          <div class="feat-tag">Performance</div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── SPELL-CHECK DEMO ──────────────────────────────────────── -->
+  <section class="spellcheck-section">
+    <div class="section-inner">
+      <div class="section-label">Spell-Check Engine</div>
+      <h2 class="section-title">No more cryptic crashes.</h2>
+      <p class="section-sub">OpenMS pinpoints your typo, names the line, and shows you exactly what to fix.</p>
+
+      <div class="spellcheck-demo">
+        <div class="spellcheck-panel bad">
+          <div class="panel-header">
+            <span class="panel-dot dot-red"></span>
+            <span class="panel-label">❌ Before — Python crash</span>
+          </div>
+          <pre><code><span class="code-line-num">1</span>  <span class="code-token-bad">machin</span>(<span class="code-str">"Hello, World!"</span>)
+
+<span class="code-error-msg">NameError: name 'machin' is not defined</span></code></pre>
+        </div>
+
+        <div class="spellcheck-arrow" aria-hidden="true">
+          <svg viewBox="0 0 40 20" fill="none">
+            <path d="M2 10h30M26 4l8 6-8 6" stroke="#00f2fe" stroke-width="2" stroke-linecap="round"
+              stroke-linejoin="round" />
+          </svg>
+        </div>
+
+        <div class="spellcheck-panel good">
+          <div class="panel-header">
+            <span class="panel-dot dot-green"></span>
+            <span class="panel-label">✅ After — OpenMS Diagnosis</span>
+          </div>
+          <pre><code><span class="diag-line">╔══════════════════════════════╗</span>
+<span class="diag-line">║  OpenMS 1.1 — Diagnostics   ║</span>
+<span class="diag-line">╚══════════════════════════════╝</span>
+
+  <span class="diag-label">Error Location :</span> <span class="diag-val">Line 1</span>
+  <span class="diag-label">What you wrote :</span> <span class="code-token-bad">machin</span>
+  <span class="diag-label">What you meant :</span> <span class="code-token-good">machine ✅</span>
+  <span class="diag-label">Tip            :</span> Replace <span class="code-token-bad">'machin'</span>
+                   with <span class="code-token-good">'machine'</span></code></pre>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── SHOWCASE / IDE ────────────────────────────────────────── -->
+  <section class="showcase" id="showcase">
+    <div class="section-inner showcase-inner">
+      <div class="showcase-text">
+        <div class="section-label">Live Code Preview</div>
+        <h2 class="section-title" style="text-align:left">See OpenMS in action.</h2>
+        <p class="section-sub" style="text-align:left;max-width:400px">
+          Clean, minimal syntax with zero ceremony. What you see is exactly what runs — no compilation fog, no
+          boilerplate noise.
+        </p>
+        <ul class="showcase-bullets">
+          <li><span class="bullet-check">✓</span> Python-powered execution</li>
+          <li><span class="bullet-check">✓</span> Native game &amp; app functions</li>
+          <li><span class="bullet-check">✓</span> Live REPL + file mode</li>
+          <li><span class="bullet-check">✓</span> Modular &amp; extensible registry</li>
+        </ul>
+        <a href="https://github.com/aadisoni8044-code/OpenMS" target="_blank" class="btn btn-primary btn-glow"
+          style="margin-top:2rem">
+          <svg class="btn-icon" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+            <path d="M10 2v10M6 8l4 4 4-4M3 14v2a1 1 0 001 1h12a1 1 0 001-1v-2" stroke="currentColor" stroke-width="1.6"
+              stroke-linecap="round" stroke-linejoin="round" />
+          </svg>
+          Download Now
+        </a>
+      </div>
+
+      <!-- IDE window -->
+      <div class="ide-window">
+        <div class="ide-topbar">
+          <span class="dot dot-red"></span>
+          <span class="dot dot-yellow"></span>
+          <span class="dot dot-green"></span>
+          <div class="ide-tab active">game_logic.ms</div>
+          <div class="ide-tab">utils.ms</div>
+        </div>
+        <div class="ide-body">
+          <div class="line-nums" aria-hidden="true">
+            <span>1</span><span>2</span><span>3</span><span>4</span>
+            <span>5</span><span>6</span><span>7</span><span>8</span>
+            <span>9</span><span>10</span><span>11</span><span>12</span>
+            <span>13</span><span>14</span><span>15</span>
+          </div>
+          <pre class="ide-code"><code><span class="c-comment"># Dynamic Game Logic in OpenMS 1.1</span>
+<span class="c-blank"></span>
+<span class="c-kw">function</span> <span class="c-fn">start_game</span>(player_name)
+    <span class="c-fn">machine</span>(<span class="c-str">"Welcome, "</span>, player_name)
+    health = <span class="c-num">100</span>
+    score  = <span class="c-num">0</span>
+<span class="c-blank"></span>
+    <span class="c-kw">while</span> health &gt; <span class="c-num">0</span>
+        enemy_damage = <span class="c-fn">random_number</span>(<span class="c-num">10</span>, <span class="c-num">50</span>)
+        <span class="c-fn">machine</span>(<span class="c-str">"Enemy attacked! Damage: "</span>, enemy_damage)
+        health = health - enemy_damage
+        score  = score + <span class="c-num">10</span>
+        <span class="c-fn">delay</span>(<span class="c-num">1</span>)
+<span class="c-blank"></span>
+<span class="c-fn">start_game</span>(<span class="c-str">"Hero"</span>)</code></pre>
+        </div>
+        <div class="ide-statusbar">
+          <span class="status-lang">OpenMS 1.1</span>
+          <span class="status-sep">•</span>
+          <span>UTF-8</span>
+          <span class="status-sep">•</span>
+          <span class="status-ok">● Ready</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── DOWNLOAD CTA ──────────────────────────────────────────── -->
+  <section class="download-cta" id="download">
+    <div class="orb orb-3" aria-hidden="true"></div>
+    <div class="section-inner" style="text-align:center;position:relative;z-index:2">
+      <div class="section-label">Get Started</div>
+      <h2 class="section-title" style="font-size:clamp(2rem,5vw,3.8rem)">Ship faster.<br />Think less. Code more.</h2>
+      <p class="section-sub">
+        Download the OpenMS 1.1 engine and start writing cleaner code today.<br />
+        Tiny executable. Zero setup friction.
+      </p>
+      <div class="hero-cta" style="justify-content:center;margin-top:2.5rem">
+        <a href="https://github.com/aadisoni8044-code/OpenMS" target="_blank"
+          class="btn btn-primary btn-glow btn-large">
+          <svg class="btn-icon" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+            <path d="M10 2v10M6 8l4 4 4-4M3 14v2a1 1 0 001 1h12a1 1 0 001-1v-2" stroke="currentColor" stroke-width="1.6"
+              stroke-linecap="round" stroke-linejoin="round" />
+          </svg>
+          Download OpenMS Engine
+        </a>
+        <a href="#features" class="btn btn-ghost">Explore Features</a>
+      </div>
+      <p class="download-note">Free &amp; open-source · Windows · Powered by Python</p>
+    </div>
+  </section>
+
+  <!-- ─── FOOTER ────────────────────────────────────────────────── -->
+  <footer class="footer">
+    <div class="footer-inner">
+      <div class="nav-logo" style="margin-bottom:.5rem">
+        <span class="logo-bracket">[</span>OpenMS<span class="logo-version">1.1</span><span
+          class="logo-bracket">]</span>
+      </div>
+      <p class="footer-sub">The Ultimate Developer Ecosystem. Lightweight. Fast. Honest.</p>
+      <div class="footer-links">
+        <a href="https://github.com/aadisoni8044-code/OpenMS" target="_blank">GitHub</a>
+        <a href="#features">Features</a>
+        <a href="#download">Download</a>
+      </div>
+      <p class="footer-copy">© 2025 OpenMS Project. Built with purpose.</p>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+
+</html>
