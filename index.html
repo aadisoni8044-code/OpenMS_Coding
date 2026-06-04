@@ -2,362 +2,887 @@
 <html lang="en">
 
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>OpenMS 1.1 — The Ultimate Developer Ecosystem</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link
-    href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=JetBrains+Mono:ital,wght@0,300;0,400;0,500;1,400&family=DM+Sans:wght@300;400;500&display=swap"
-    rel="stylesheet" />
-  <link rel="stylesheet" href="style.css" />
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>OpenMS 1.1 — A Personal Logic Engine</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;600;700&family=Syne:wght@400;600;700;800&display=swap"
+        rel="stylesheet" />
+    <style>
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        :root {
+            --bg: #0a0b0d;
+            --bg2: #0f1114;
+            --bg3: #141619;
+            --border: #1e2126;
+            --accent: #00d4aa;
+            --accent2: #0099ff;
+            --warn: #f0a500;
+            --text: #c8cdd6;
+            --text-dim: #5a6070;
+            --text-hi: #edf0f5;
+            --fn-color: #61d4ff;
+            --kw-color: #c792ea;
+            --str-color: #c3e88d;
+            --var-color: #ffcb6b;
+            --op-color: #89ddff;
+            --cm-color: #546e7a;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background: var(--bg);
+            color: var(--text);
+            font-family: 'Syne', sans-serif;
+            font-size: 16px;
+            line-height: 1.7;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* grid bg texture */
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background-image:
+                linear-gradient(var(--border) 1px, transparent 1px),
+                linear-gradient(90deg, var(--border) 1px, transparent 1px);
+            background-size: 48px 48px;
+            opacity: 0.35;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        /* subtle glow blob */
+        body::after {
+            content: '';
+            position: fixed;
+            top: -200px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 700px;
+            height: 700px;
+            background: radial-gradient(ellipse, rgba(0, 212, 170, .07) 0%, transparent 70%);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        section,
+        nav,
+        header,
+        footer {
+            position: relative;
+            z-index: 1;
+        }
+
+        /* ── NAV ── */
+        nav {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 20px 60px;
+            border-bottom: 1px solid var(--border);
+            backdrop-filter: blur(10px);
+            background: rgba(10, 11, 13, .75);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .nav-logo {
+            font-family: 'JetBrains Mono', monospace;
+            font-weight: 700;
+            font-size: 1rem;
+            color: var(--accent);
+            letter-spacing: .04em;
+        }
+
+        .nav-logo span {
+            color: var(--text-dim);
+            font-weight: 300;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 32px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--text-dim);
+            text-decoration: none;
+            font-size: .85rem;
+            font-weight: 600;
+            letter-spacing: .08em;
+            text-transform: uppercase;
+            transition: color .2s;
+        }
+
+        .nav-links a:hover {
+            color: var(--accent);
+        }
+
+        .nav-badge {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: .7rem;
+            background: rgba(0, 212, 170, .08);
+            border: 1px solid rgba(0, 212, 170, .2);
+            color: var(--accent);
+            padding: 4px 10px;
+            border-radius: 3px;
+        }
+
+        /* ── HERO ── */
+        header {
+            padding: 100px 60px 80px;
+            max-width: 960px;
+            margin: 0 auto;
+        }
+
+        .poc-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: .72rem;
+            letter-spacing: .12em;
+            text-transform: uppercase;
+            color: var(--warn);
+            background: rgba(240, 165, 0, .07);
+            border: 1px solid rgba(240, 165, 0, .25);
+            padding: 6px 14px;
+            border-radius: 3px;
+            margin-bottom: 28px;
+        }
+
+        .poc-badge::before {
+            content: '⚠';
+            font-size: .8rem;
+        }
+
+        h1 {
+            font-size: clamp(2.6rem, 5vw, 4rem);
+            font-weight: 800;
+            color: var(--text-hi);
+            line-height: 1.1;
+            letter-spacing: -.02em;
+            margin-bottom: 22px;
+        }
+
+        h1 em {
+            font-style: normal;
+            background: linear-gradient(90deg, var(--accent), var(--accent2));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero-sub {
+            font-size: 1.1rem;
+            color: var(--text);
+            max-width: 580px;
+            margin-bottom: 14px;
+        }
+
+        .hero-note {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: .8rem;
+            color: var(--text-dim);
+            margin-bottom: 44px;
+            max-width: 560px;
+        }
+
+        .hero-note strong {
+            color: var(--warn);
+        }
+
+        .hero-cta {
+            display: flex;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 13px 28px;
+            border-radius: 4px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: .85rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all .22s;
+            text-decoration: none;
+            border: none;
+        }
+
+        .btn-primary {
+            background: var(--accent);
+            color: #000;
+            letter-spacing: .04em;
+        }
+
+        .btn-primary:hover {
+            background: #00f0c0;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px rgba(0, 212, 170, .25);
+        }
+
+        .btn-ghost {
+            background: transparent;
+            color: var(--text);
+            border: 1px solid var(--border);
+            letter-spacing: .04em;
+        }
+
+        .btn-ghost:hover {
+            border-color: var(--accent);
+            color: var(--accent);
+            transform: translateY(-2px);
+        }
+
+        /* ── DISCLAIMER BOX ── */
+        .disclaimer {
+            max-width: 860px;
+            margin: 0 auto 80px;
+            padding: 0 60px;
+        }
+
+        .disclaimer-box {
+            background: rgba(240, 165, 0, .04);
+            border: 1px solid rgba(240, 165, 0, .2);
+            border-left: 3px solid var(--warn);
+            border-radius: 4px;
+            padding: 24px 28px;
+        }
+
+        .disclaimer-box h3 {
+            font-size: .8rem;
+            letter-spacing: .14em;
+            text-transform: uppercase;
+            color: var(--warn);
+            font-family: 'JetBrains Mono', monospace;
+            margin-bottom: 10px;
+        }
+
+        .disclaimer-box ul {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .disclaimer-box li {
+            font-size: .88rem;
+            color: var(--text);
+            padding-left: 18px;
+            position: relative;
+        }
+
+        .disclaimer-box li::before {
+            content: '×';
+            position: absolute;
+            left: 0;
+            color: var(--warn);
+            font-weight: 700;
+        }
+
+        /* ── SECTION LAYOUT ── */
+        .section {
+            max-width: 860px;
+            margin: 0 auto;
+            padding: 0 60px 100px;
+        }
+
+        .section-label {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: .7rem;
+            letter-spacing: .18em;
+            text-transform: uppercase;
+            color: var(--accent);
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .section-label::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: var(--border);
+        }
+
+        .section h2 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--text-hi);
+            margin-bottom: 16px;
+            letter-spacing: -.01em;
+        }
+
+        .section p {
+            color: var(--text);
+            margin-bottom: 12px;
+            font-size: .95rem;
+        }
+
+        /* ── CODE BLOCK ── */
+        .code-block {
+            background: var(--bg2);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            overflow: hidden;
+            margin: 28px 0;
+        }
+
+        .code-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 10px 18px;
+            border-bottom: 1px solid var(--border);
+            background: var(--bg3);
+        }
+
+        .code-header span {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: .7rem;
+            color: var(--text-dim);
+            letter-spacing: .08em;
+            text-transform: uppercase;
+        }
+
+        .code-dots {
+            display: flex;
+            gap: 6px;
+        }
+
+        .dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+        }
+
+        .dot-r {
+            background: #ff5f57;
+        }
+
+        .dot-y {
+            background: #febc2e;
+        }
+
+        .dot-g {
+            background: #28c840;
+        }
+
+        pre {
+            padding: 22px 22px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: .85rem;
+            line-height: 1.75;
+            overflow-x: auto;
+            white-space: pre;
+        }
+
+        /* syntax */
+        .fn {
+            color: var(--fn-color);
+        }
+
+        .kw {
+            color: var(--kw-color);
+        }
+
+        .str {
+            color: var(--str-color);
+        }
+
+        .var {
+            color: var(--var-color);
+        }
+
+        .op {
+            color: var(--op-color);
+        }
+
+        .cm {
+            color: var(--cm-color);
+            font-style: italic;
+        }
+
+        .pn {
+            color: var(--text-dim);
+        }
+
+        /* ── FEATURES GRID ── */
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 16px;
+            margin-top: 28px;
+        }
+
+        .feature-card {
+            background: var(--bg2);
+            border: 1px solid var(--border);
+            border-radius: 5px;
+            padding: 24px 22px;
+            transition: border-color .2s, transform .2s;
+        }
+
+        .feature-card:hover {
+            border-color: rgba(0, 212, 170, .3);
+            transform: translateY(-3px);
+        }
+
+        .feature-icon {
+            font-size: 1.3rem;
+            margin-bottom: 12px;
+        }
+
+        .feature-card h4 {
+            color: var(--text-hi);
+            font-size: .95rem;
+            margin-bottom: 6px;
+        }
+
+        .feature-card p {
+            color: var(--text-dim);
+            font-size: .83rem;
+            line-height: 1.55;
+        }
+
+        /* ── DOWNLOAD ── */
+        .download-box {
+            background: var(--bg2);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            padding: 44px 40px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .download-box::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(ellipse at 50% 0%, rgba(0, 212, 170, .07) 0%, transparent 60%);
+            pointer-events: none;
+        }
+
+        .download-box h3 {
+            font-size: 1.5rem;
+            color: var(--text-hi);
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+
+        .download-box p {
+            color: var(--text-dim);
+            font-size: .88rem;
+            margin-bottom: 28px;
+        }
+
+        .download-url {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: .78rem;
+            color: var(--text-dim);
+            background: var(--bg3);
+            border: 1px solid var(--border);
+            border-radius: 3px;
+            padding: 8px 16px;
+            margin-top: 20px;
+        }
+
+        /* ── VERSION PILL ── */
+        .version-row {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            margin-top: 24px;
+            justify-content: center;
+        }
+
+        .pill {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: .72rem;
+            padding: 4px 12px;
+            border-radius: 30px;
+            border: 1px solid;
+        }
+
+        .pill-green {
+            color: var(--accent);
+            border-color: rgba(0, 212, 170, .3);
+            background: rgba(0, 212, 170, .06);
+        }
+
+        .pill-blue {
+            color: var(--accent2);
+            border-color: rgba(0, 153, 255, .3);
+            background: rgba(0, 153, 255, .06);
+        }
+
+        .pill-dim {
+            color: var(--text-dim);
+            border-color: var(--border);
+            background: var(--bg3);
+        }
+
+        /* ── HOW IT WORKS ── */
+        .steps {
+            display: flex;
+            flex-direction: column;
+            gap: 0;
+            margin-top: 28px;
+        }
+
+        .step {
+            display: flex;
+            gap: 24px;
+            padding: 22px 0;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .step:last-child {
+            border-bottom: none;
+        }
+
+        .step-num {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: .7rem;
+            color: var(--accent);
+            min-width: 32px;
+            padding-top: 2px;
+        }
+
+        .step-body h4 {
+            color: var(--text-hi);
+            font-size: .95rem;
+            margin-bottom: 5px;
+        }
+
+        .step-body p {
+            color: var(--text-dim);
+            font-size: .85rem;
+        }
+
+        /* ── FOOTER ── */
+        footer {
+            border-top: 1px solid var(--border);
+            padding: 32px 60px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        .footer-left {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: .75rem;
+            color: var(--text-dim);
+        }
+
+        .footer-left strong {
+            color: var(--accent);
+        }
+
+        .footer-right {
+            font-size: .78rem;
+            color: var(--text-dim);
+        }
+
+        /* ── SCROLL REVEAL ── */
+        .reveal {
+            opacity: 0;
+            transform: translateY(24px);
+            transition: opacity .55s ease, transform .55s ease;
+        }
+
+        .reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        @media (max-width: 680px) {
+            nav {
+                padding: 16px 24px;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            header,
+            .disclaimer,
+            .section {
+                padding-left: 24px;
+                padding-right: 24px;
+            }
+
+            footer {
+                padding: 24px;
+                flex-direction: column;
+                align-items: flex-start;
+            }
+        }
+    </style>
 </head>
 
 <body>
 
-  <!-- ─── NAV ─────────────────────────────────────────────────── -->
-  <nav class="nav" id="nav">
-    <div class="nav-inner">
-      <a href="#" class="nav-logo">
-        <span class="logo-bracket">[</span>OpenMS<span class="logo-version">1.1</span><span
-          class="logo-bracket">]</span>
-      </a>
-      <ul class="nav-links">
-        <li><a href="#features">Features</a></li>
-        <li><a href="#showcase">Showcase</a></li>
-        <li><a href="#download">Download</a></li>
-      </ul>
-      <a href="https://github.com/aadisoni8044-code/OpenMS" target="_blank" class="btn btn-nav">
-        Get Engine
-      </a>
-      <button class="nav-hamburger" id="hamburger" aria-label="Open menu">
-        <span></span><span></span><span></span>
-      </button>
-    </div>
-    <!-- mobile menu -->
-    <div class="mobile-menu" id="mobileMenu">
-      <a href="#features">Features</a>
-      <a href="#showcase">Showcase</a>
-      <a href="#download">Download</a>
-      <a href="https://github.com/aadisoni8044-code/OpenMS" target="_blank" class="btn btn-primary"
-        style="margin-top:1rem">Get Engine</a>
-    </div>
-  </nav>
-
-  <!-- ─── HERO ─────────────────────────────────────────────────── -->
-  <section class="hero" id="home">
-    <!-- animated grid -->
-    <div class="grid-bg" aria-hidden="true"></div>
-    <!-- scanline overlay -->
-    <div class="scanlines" aria-hidden="true"></div>
-    <!-- floating orbs -->
-    <div class="orb orb-1" aria-hidden="true"></div>
-    <div class="orb orb-2" aria-hidden="true"></div>
-
-    <div class="hero-inner">
-      <div class="hero-badge">
-        <span class="badge-dot"></span>
-        Version 1.1 — Now Available
-      </div>
-
-      <h1 class="hero-title">
-        OpenMS 1.1<br />
-        <span class="title-accent">The Ultimate Developer</span>
-        <span class="title-outline">Ecosystem</span>
-      </h1>
-
-      <p class="hero-sub">
-        A lightweight, high-performance language designed to eliminate clutter.<br />
-        No semicolons, no strict colons — just pure, blazing-fast code.
-      </p>
-
-      <div class="hero-cta">
-        <a href="https://github.com/aadisoni8044-code/OpenMS" target="_blank" class="btn btn-primary btn-glow">
-          <svg class="btn-icon" viewBox="0 0 20 20" fill="none" aria-hidden="true">
-            <path d="M10 2v10M6 8l4 4 4-4M3 14v2a1 1 0 001 1h12a1 1 0 001-1v-2" stroke="currentColor" stroke-width="1.6"
-              stroke-linecap="round" stroke-linejoin="round" />
-          </svg>
-          Download OpenMS Engine
-        </a>
-        <a href="#showcase" class="btn btn-ghost">
-          View Documentation
-          <svg class="btn-icon-right" viewBox="0 0 20 20" fill="none" aria-hidden="true">
-            <path d="M4 10h12M11 5l5 5-5 5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"
-              stroke-linejoin="round" />
-          </svg>
-        </a>
-      </div>
-
-      <!-- terminal preview snippet in hero -->
-      <div class="hero-terminal" aria-label="OpenMS code sample">
-        <div class="terminal-topbar">
-          <span class="dot dot-red"></span>
-          <span class="dot dot-yellow"></span>
-          <span class="dot dot-green"></span>
-          <span class="terminal-title">openms_shell.ms</span>
-        </div>
-        <pre class="terminal-code"><code id="heroCode"></code></pre>
-      </div>
-
-      <!-- stats row -->
-      <div class="stats-row">
-        <div class="stat">
-          <span class="stat-num">0</span>
-          <span class="stat-label">Semicolons Required</span>
-        </div>
-        <div class="stat-divider"></div>
-        <div class="stat">
-          <span class="stat-num">1.1</span>
-          <span class="stat-label">Current Stable Version</span>
-        </div>
-        <div class="stat-divider"></div>
-        <div class="stat">
-          <span class="stat-num">∞</span>
-          <span class="stat-label">Extensible Functions</span>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ─── FEATURES ─────────────────────────────────────────────── -->
-  <section class="features" id="features">
-    <div class="section-inner">
-      <div class="section-label">Core Capabilities</div>
-      <h2 class="section-title">Everything a modern language<br />should ship with.</h2>
-      <p class="section-sub">OpenMS strips the ceremony from code, keeping the power.</p>
-
-      <div class="features-grid">
-
-        <!-- Feature 1 -->
-        <div class="feat-card" data-index="0">
-          <div class="feat-icon-wrap">
-            <svg viewBox="0 0 40 40" fill="none" aria-hidden="true">
-              <rect width="40" height="40" rx="10" fill="transparent" />
-              <path d="M10 14h20M10 20h14M10 26h17" stroke="#00f2fe" stroke-width="2" stroke-linecap="round" />
-              <circle cx="31" cy="26" r="4" stroke="#00f2fe" stroke-width="1.5" />
-              <path d="M29 26l1.5 1.5L33 24" stroke="#00f2fe" stroke-width="1.5" stroke-linecap="round"
-                stroke-linejoin="round" />
-            </svg>
-          </div>
-          <h3 class="feat-title">Zero Clutter</h3>
-          <p class="feat-desc">No semicolons, no forced colons. Write in clean, readable blocks that look like
-            pseudocode — only it actually runs.</p>
-          <div class="feat-tag">Syntax Design</div>
-        </div>
-
-        <!-- Feature 2 -->
-        <div class="feat-card" data-index="1">
-          <div class="feat-icon-wrap">
-            <svg viewBox="0 0 40 40" fill="none" aria-hidden="true">
-              <rect width="40" height="40" rx="10" fill="transparent" />
-              <path d="M8 20a12 12 0 1124 0 12 12 0 01-24 0z" stroke="#00f2fe" stroke-width="1.5" />
-              <path d="M20 14v6l4 2" stroke="#00f2fe" stroke-width="1.8" stroke-linecap="round"
-                stroke-linejoin="round" />
-              <path d="M13 31l2-3" stroke="#00f2fe" stroke-width="1.5" stroke-linecap="round" />
-              <path d="M27 31l-2-3" stroke="#00f2fe" stroke-width="1.5" stroke-linecap="round" />
-            </svg>
-          </div>
-          <h3 class="feat-title">Smart Error Spotter</h3>
-          <p class="feat-desc">Advanced English spell-check engine catches <code>machin()</code> and instantly suggests
-            <code>machine()</code> with exact line numbers.
-          </p>
-          <div class="feat-tag">Diagnostics</div>
-        </div>
-
-        <!-- Feature 3 -->
-        <div class="feat-card" data-index="2">
-          <div class="feat-icon-wrap">
-            <svg viewBox="0 0 40 40" fill="none" aria-hidden="true">
-              <rect width="40" height="40" rx="10" fill="transparent" />
-              <rect x="8" y="12" width="24" height="18" rx="3" stroke="#00f2fe" stroke-width="1.5" />
-              <path d="M14 22l3 3 6-7" stroke="#00f2fe" stroke-width="1.8" stroke-linecap="round"
-                stroke-linejoin="round" />
-              <path d="M20 8v4" stroke="#00f2fe" stroke-width="1.5" stroke-linecap="round" />
-            </svg>
-          </div>
-          <h3 class="feat-title">Built for Apps &amp; Games</h3>
-          <p class="feat-desc">In-built high-performance functions for retro games, loop controls, and fast execution.
-            <code>random_number</code>, <code>delay</code>, <code>clear_terminal</code> — all native.
-          </p>
-          <div class="feat-tag">Runtime</div>
-        </div>
-
-        <!-- Feature 4 -->
-        <div class="feat-card" data-index="3">
-          <div class="feat-icon-wrap">
-            <svg viewBox="0 0 40 40" fill="none" aria-hidden="true">
-              <rect width="40" height="40" rx="10" fill="transparent" />
-              <path d="M20 8l2 5h5l-4 3 1.5 5L20 18l-4.5 3 1.5-5-4-3h5z" stroke="#00f2fe" stroke-width="1.4"
-                stroke-linejoin="round" />
-              <path d="M12 28h16M14 32h12" stroke="#00f2fe" stroke-width="1.5" stroke-linecap="round" />
-            </svg>
-          </div>
-          <h3 class="feat-title">Lightweight Base Engine</h3>
-          <p class="feat-desc">Tiny footprint, portable, and lightning-fast compilation built on Python core
-            optimization. Ship anywhere, instantly.</p>
-          <div class="feat-tag">Performance</div>
-        </div>
-
-      </div>
-    </div>
-  </section>
-
-  <!-- ─── SPELL-CHECK DEMO ──────────────────────────────────────── -->
-  <section class="spellcheck-section">
-    <div class="section-inner">
-      <div class="section-label">Spell-Check Engine</div>
-      <h2 class="section-title">No more cryptic crashes.</h2>
-      <p class="section-sub">OpenMS pinpoints your typo, names the line, and shows you exactly what to fix.</p>
-
-      <div class="spellcheck-demo">
-        <div class="spellcheck-panel bad">
-          <div class="panel-header">
-            <span class="panel-dot dot-red"></span>
-            <span class="panel-label">❌ Before — Python crash</span>
-          </div>
-          <pre><code><span class="code-line-num">1</span>  <span class="code-token-bad">machin</span>(<span class="code-str">"Hello, World!"</span>)
-
-<span class="code-error-msg">NameError: name 'machin' is not defined</span></code></pre>
-        </div>
-
-        <div class="spellcheck-arrow" aria-hidden="true">
-          <svg viewBox="0 0 40 20" fill="none">
-            <path d="M2 10h30M26 4l8 6-8 6" stroke="#00f2fe" stroke-width="2" stroke-linecap="round"
-              stroke-linejoin="round" />
-          </svg>
-        </div>
-
-        <div class="spellcheck-panel good">
-          <div class="panel-header">
-            <span class="panel-dot dot-green"></span>
-            <span class="panel-label">✅ After — OpenMS Diagnosis</span>
-          </div>
-          <pre><code><span class="diag-line">╔══════════════════════════════╗</span>
-<span class="diag-line">║  OpenMS 1.1 — Diagnostics   ║</span>
-<span class="diag-line">╚══════════════════════════════╝</span>
-
-  <span class="diag-label">Error Location :</span> <span class="diag-val">Line 1</span>
-  <span class="diag-label">What you wrote :</span> <span class="code-token-bad">machin</span>
-  <span class="diag-label">What you meant :</span> <span class="code-token-good">machine ✅</span>
-  <span class="diag-label">Tip            :</span> Replace <span class="code-token-bad">'machin'</span>
-                   with <span class="code-token-good">'machine'</span></code></pre>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ─── SHOWCASE / IDE ────────────────────────────────────────── -->
-  <section class="showcase" id="showcase">
-    <div class="section-inner showcase-inner">
-      <div class="showcase-text">
-        <div class="section-label">Live Code Preview</div>
-        <h2 class="section-title" style="text-align:left">See OpenMS in action.</h2>
-        <p class="section-sub" style="text-align:left;max-width:400px">
-          Clean, minimal syntax with zero ceremony. What you see is exactly what runs — no compilation fog, no
-          boilerplate noise.
-        </p>
-        <ul class="showcase-bullets">
-          <li><span class="bullet-check">✓</span> Python-powered execution</li>
-          <li><span class="bullet-check">✓</span> Native game &amp; app functions</li>
-          <li><span class="bullet-check">✓</span> Live REPL + file mode</li>
-          <li><span class="bullet-check">✓</span> Modular &amp; extensible registry</li>
+    <!-- NAV -->
+    <nav>
+        <div class="nav-logo">OpenMS<span> / v1.1</span></div>
+        <ul class="nav-links">
+            <li><a href="#about">About</a></li>
+            <li><a href="#syntax">Syntax</a></li>
+            <li><a href="#download">Download</a></li>
         </ul>
-        <a href="https://github.com/aadisoni8044-code/OpenMS" target="_blank" class="btn btn-primary btn-glow"
-          style="margin-top:2rem">
-          <svg class="btn-icon" viewBox="0 0 20 20" fill="none" aria-hidden="true">
-            <path d="M10 2v10M6 8l4 4 4-4M3 14v2a1 1 0 001 1h12a1 1 0 001-1v-2" stroke="currentColor" stroke-width="1.6"
-              stroke-linecap="round" stroke-linejoin="round" />
-          </svg>
-          Download Now
-        </a>
-      </div>
+        <span class="nav-badge">POC · Educational</span>
+    </nav>
 
-      <!-- IDE window -->
-      <div class="ide-window">
-        <div class="ide-topbar">
-          <span class="dot dot-red"></span>
-          <span class="dot dot-yellow"></span>
-          <span class="dot dot-green"></span>
-          <div class="ide-tab active">game_logic.ms</div>
-          <div class="ide-tab">utils.ms</div>
+    <!-- HERO -->
+    <header>
+        <div class="poc-badge">Personal Project · Proof of Concept</div>
+        <h1>OpenMS <em>1.1</em><br>A Simple Logic Engine</h1>
+        <p class="hero-sub">
+            A minimal, custom programming language built purely for personal learning and exploration.
+            No frameworks. No magic. Just honest code.
+        </p>
+        <p class="hero-note">
+            <strong>Honest disclaimer:</strong> This is not a production language. It cannot be used
+            to build websites, games, or mobile apps. It is a logic engine made for fun and education only.
+        </p>
+        <div class="hero-cta">
+            <a href="https://github.com/aadisoni8044-code/OpenMS" target="_blank" rel="noopener"
+                class="btn btn-primary">
+                ↓ Download on GitHub
+            </a>
+            <a href="#syntax" class="btn btn-ghost">View Syntax Examples</a>
         </div>
-        <div class="ide-body">
-          <div class="line-nums" aria-hidden="true">
-            <span>1</span><span>2</span><span>3</span><span>4</span>
-            <span>5</span><span>6</span><span>7</span><span>8</span>
-            <span>9</span><span>10</span><span>11</span><span>12</span>
-            <span>13</span><span>14</span><span>15</span>
-          </div>
-          <pre class="ide-code"><code><span class="c-comment"># Dynamic Game Logic in OpenMS 1.1</span>
-<span class="c-blank"></span>
-<span class="c-kw">function</span> <span class="c-fn">start_game</span>(player_name)
-    <span class="c-fn">machine</span>(<span class="c-str">"Welcome, "</span>, player_name)
-    health = <span class="c-num">100</span>
-    score  = <span class="c-num">0</span>
-<span class="c-blank"></span>
-    <span class="c-kw">while</span> health &gt; <span class="c-num">0</span>
-        enemy_damage = <span class="c-fn">random_number</span>(<span class="c-num">10</span>, <span class="c-num">50</span>)
-        <span class="c-fn">machine</span>(<span class="c-str">"Enemy attacked! Damage: "</span>, enemy_damage)
-        health = health - enemy_damage
-        score  = score + <span class="c-num">10</span>
-        <span class="c-fn">delay</span>(<span class="c-num">1</span>)
-<span class="c-blank"></span>
-<span class="c-fn">start_game</span>(<span class="c-str">"Hero"</span>)</code></pre>
+    </header>
+
+    <!-- DISCLAIMER -->
+    <div class="disclaimer reveal">
+        <div class="disclaimer-box">
+            <h3>What OpenMS cannot do</h3>
+            <ul>
+                <li>Build games, mobile apps, or web applications</li>
+                <li>Replace any real-world programming language</li>
+                <li>Be used in any production or commercial environment</li>
+                <li>Perform complex computations or manage large-scale systems</li>
+            </ul>
         </div>
-        <div class="ide-statusbar">
-          <span class="status-lang">OpenMS 1.1</span>
-          <span class="status-sep">•</span>
-          <span>UTF-8</span>
-          <span class="status-sep">•</span>
-          <span class="status-ok">● Ready</span>
+    </div>
+
+    <!-- ABOUT -->
+    <section class="section reveal" id="about">
+        <div class="section-label">01 — About</div>
+        <h2>What is OpenMS?</h2>
+        <p>
+            OpenMS is a personal side project — a hand-crafted, experimental logic engine
+            written as a learning exercise. It implements a tiny custom syntax that lets you
+            define data and pass it through a simple output mechanism called <code
+                style="color:var(--fn-color);font-family:'JetBrains Mono',monospace;font-size:.85em">machine()</code>.
+        </p>
+        <p>
+            This project exists solely to explore how interpreters and language parsers work
+            at a basic level. It is a Proof of Concept (POC) and is openly shared so others
+            can study, fork, and learn from it — nothing more.
+        </p>
+
+        <div class="features-grid" style="margin-top:36px">
+            <div class="feature-card">
+                <div class="feature-icon">🔬</div>
+                <h4>Educational Only</h4>
+                <p>Built to understand how interpreters process tokens and evaluate expressions. Not for production.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">⚙️</div>
+                <h4>Minimal Syntax</h4>
+                <p>A deliberately small instruction set. Easy to read, easy to trace, honest in its limitations.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🧩</div>
+                <h4>Proof of Concept</h4>
+                <p>A POC that demonstrates core concepts of language design without any overclaiming.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">📖</div>
+                <h4>Open Source</h4>
+                <p>Shared freely on GitHub. Inspect it, fork it, tear it apart — that's the point.</p>
+            </div>
         </div>
-      </div>
-    </div>
-  </section>
+    </section>
 
-  <!-- ─── DOWNLOAD CTA ──────────────────────────────────────────── -->
-  <section class="download-cta" id="download">
-    <div class="orb orb-3" aria-hidden="true"></div>
-    <div class="section-inner" style="text-align:center;position:relative;z-index:2">
-      <div class="section-label">Get Started</div>
-      <h2 class="section-title" style="font-size:clamp(2rem,5vw,3.8rem)">Ship faster.<br />Think less. Code more.</h2>
-      <p class="section-sub">
-        Download the OpenMS 1.1 engine and start writing cleaner code today.<br />
-        Tiny executable. Zero setup friction.
-      </p>
-      <div class="hero-cta" style="justify-content:center;margin-top:2.5rem">
-        <a href="https://github.com/aadisoni8044-code/OpenMS" target="_blank"
-          class="btn btn-primary btn-glow btn-large">
-          <svg class="btn-icon" viewBox="0 0 20 20" fill="none" aria-hidden="true">
-            <path d="M10 2v10M6 8l4 4 4-4M3 14v2a1 1 0 001 1h12a1 1 0 001-1v-2" stroke="currentColor" stroke-width="1.6"
-              stroke-linecap="round" stroke-linejoin="round" />
-          </svg>
-          Download OpenMS Engine
-        </a>
-        <a href="#features" class="btn btn-ghost">Explore Features</a>
-      </div>
-      <p class="download-note">Free &amp; open-source · Windows · Powered by Python</p>
-    </div>
-  </section>
+    <!-- SYNTAX -->
+    <section class="section reveal" id="syntax">
+        <div class="section-label">02 — Syntax Examples</div>
+        <h2>How OpenMS Looks</h2>
+        <p>
+            The syntax is intentionally small. The core keyword is
+            <code style="color:var(--fn-color);font-family:'JetBrains Mono',monospace;font-size:.85em">machine()</code>,
+            which outputs a value. Variables are assigned with <code
+                style="color:var(--op-color);font-family:'JetBrains Mono',monospace;font-size:.85em">=</code>.
+            That's the gist of it.
+        </p>
 
-  <!-- ─── FOOTER ────────────────────────────────────────────────── -->
-  <footer class="footer">
-    <div class="footer-inner">
-      <div class="nav-logo" style="margin-bottom:.5rem">
-        <span class="logo-bracket">[</span>OpenMS<span class="logo-version">1.1</span><span
-          class="logo-bracket">]</span>
-      </div>
-      <p class="footer-sub">The Ultimate Developer Ecosystem. Lightweight. Fast. Honest.</p>
-      <div class="footer-links">
-        <a href="https://github.com/aadisoni8044-code/OpenMS" target="_blank">GitHub</a>
-        <a href="#features">Features</a>
-        <a href="#download">Download</a>
-      </div>
-      <p class="footer-copy">© 2025 OpenMS Project. Built with purpose.</p>
-    </div>
-  </footer>
+        <!-- Example 1 -->
+        <div class="code-block">
+            <div class="code-header">
+                <div class="code-dots">
+                    <div class="dot dot-r"></div>
+                    <div class="dot dot-y"></div>
+                    <div class="dot dot-g"></div>
+                </div>
+                <span>Example 1 — Direct Output</span>
+            </div>
+            <pre><span class="cm">// Pass a string directly to the output function</span>
+<span class="fn">machine</span><span class="pn">(</span><span class="str">"Hello World"</span><span class="pn">)</span></pre>
+        </div>
 
-  <script src="script.js"></script>
+        <!-- Example 2 -->
+        <div class="code-block">
+            <div class="code-header">
+                <div class="code-dots">
+                    <div class="dot dot-r"></div>
+                    <div class="dot dot-y"></div>
+                    <div class="dot dot-g"></div>
+                </div>
+                <span>Example 2 — Variable Then Output</span>
+            </div>
+            <pre><span class="cm">// Assign a value to a variable, then pass it to machine()</span>
+<span class="var">data</span> <span class="op">=</span> <span class="str">"Hello World"</span>
+<span class="fn">machine</span><span class="pn">(</span><span class="var">data</span><span class="pn">)</span></pre>
+        </div>
+
+        <!-- Syntax key -->
+        <div style="display:flex;gap:20px;flex-wrap:wrap;margin-top:8px;margin-bottom:4px">
+            <span style="font-family:'JetBrains Mono',monospace;font-size:.75rem;color:var(--fn-color)">■
+                function</span>
+            <span style="font-family:'JetBrains Mono',monospace;font-size:.75rem;color:var(--var-color)">■
+                variable</span>
+            <span style="font-family:'JetBrains Mono',monospace;font-size:.75rem;color:var(--str-color)">■ string</span>
+            <span style="font-family:'JetBrains Mono',monospace;font-size:.75rem;color:var(--op-color)">■
+                operator</span>
+            <span style="font-family:'JetBrains Mono',monospace;font-size:.75rem;color:var(--cm-color)">■ comment</span>
+        </div>
+    </section>
+
+    <!-- HOW IT WORKS -->
+    <section class="section reveal" id="how">
+        <div class="section-label">03 — How It Works</div>
+        <h2>Under the Hood</h2>
+        <p>OpenMS processes your code through a basic pipeline — nothing fancy, completely transparent.</p>
+        <div class="steps">
+            <div class="step">
+                <div class="step-num">01</div>
+                <div class="step-body">
+                    <h4>Tokenization</h4>
+                    <p>The source text is split into recognizable tokens: keywords, identifiers, strings, and operators.
+                    </p>
+                </div>
+            </div>
+            <div class="step">
+                <div class="step-num">02</div>
+                <div class="step-body">
+                    <h4>Parsing</h4>
+                    <p>Tokens are parsed into a simple structure the engine can evaluate — no complex AST, just the
+                        basics.</p>
+                </div>
+            </div>
+            <div class="step">
+                <div class="step-num">03</div>
+                <div class="step-body">
+                    <h4>Evaluation</h4>
+                    <p>The engine walks the parsed structure, resolves variable references, and executes <code
+                            style="color:var(--fn-color);font-family:'JetBrains Mono',monospace;font-size:.85em">machine()</code>
+                        calls.</p>
+                </div>
+            </div>
+            <div class="step">
+                <div class="step-num">04</div>
+                <div class="step-body">
+                    <h4>Output</h4>
+                    <p>The result is written to the console. That's it. Simple, honest, and easy to trace.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- DOWNLOAD -->
+    <section class="section reveal" id="download">
+        <div class="section-label">04 — Download</div>
+        <h2>Get OpenMS 1.1</h2>
+
+        <div class="download-box">
+            <h3>Available on GitHub</h3>
+            <p>The full source code is openly available. Clone it, read it, or suggest improvements.</p>
+            <a href="https://github.com/aadisoni8044-code/OpenMS" target="_blank" rel="noopener" class="btn btn-primary"
+                style="font-size:.9rem;padding:14px 36px">
+                ↓ &nbsp;View & Download on GitHub
+            </a>
+            <div class="version-row">
+                <span class="pill pill-green">v1.1 Latest</span>
+                <span class="pill pill-blue">Open Source</span>
+                <span class="pill pill-dim">Personal / Educational</span>
+                <span class="pill pill-dim">Proof of Concept</span>
+            </div>
+            <div class="download-url">
+                <span style="color:var(--accent)">⌥</span>
+                github.com/aadisoni8044-code/OpenMS
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer>
+        <div class="footer-left">
+            <strong>OpenMS 1.1</strong> — A personal, educational logic engine. Not a production tool.
+        </div>
+        <div class="footer-right">
+            Built for learning · Shared openly · No claims, no hype
+        </div>
+    </footer>
+
+    <script>
+        // Scroll reveal
+        const els = document.querySelectorAll('.reveal');
+        const io = new IntersectionObserver(entries => {
+            entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); io.unobserve(e.target); } });
+        }, { threshold: 0.12 });
+        els.forEach(el => io.observe(el));
+
+        // Stagger hero on load
+        document.querySelector('header').style.opacity = '0';
+        document.querySelector('header').style.transform = 'translateY(20px)';
+        document.querySelector('header').style.transition = 'opacity .7s ease, transform .7s ease';
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                document.querySelector('header').style.opacity = '1';
+                document.querySelector('header').style.transform = 'translateY(0)';
+            }, 80);
+        });
+    </script>
 </body>
 
 </html>
