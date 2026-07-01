@@ -1,9 +1,13 @@
    https://aadisoni8044-code.github.io/HTML/
 
 
-----------------------------------------------------
-google  https://google.com
-
------------------------------------------------------
-
-Github https://github.com
+```html
+<!DOCTYPE html>
+<html>
+<head>
+    <title>My First Webpage</title>
+</head>
+<body>
+    <h1>Hello, GitHub!</h1>
+</body>
+</html>
